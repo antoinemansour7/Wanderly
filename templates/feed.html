@@ -5,23 +5,22 @@
 {% block content %}
 <div class="container">
     <h2>Feed</h2>
-    {% for post in posts %}
-    <div class="post">
-        <div class="post-header">
-            <span>{{ post.author.username }}</span>
-            {% if post.author != current_user %}
-                {% if current_user.is_following(post.author) %}
-                <a href="{{ url_for('unfollow', username=post.author.username) }}" class="follow-btn">Unfollow</a>
-                {% else %}
-                <a href="{{ url_for('follow', username=post.author.username) }}" class="follow-btn">Follow</a>
-                {% endif %}
-            {% endif %}
+    <div class="post-grid">
+        {% if posts %}
+        {% for post in posts %}
+        <div class="post">
+            <div class="post-header">
+                <span>{{ post.author.username }}</span>
+            </div>
+            <img src="{{ url_for('uploaded_file', filename=post.image_file) }}" alt="Trip Image">
+            <div class="post-footer">
+                <span>Posted on {{ post.date_posted.strftime('%Y-%m-%d') }}</span>
+            </div>
         </div>
-        <img src="{{ url_for('uploaded_file', filename=post.image_file) }}" alt="Trip Image">
-        <div class="post-footer">
-            <span>Posted on {{ post.date_posted.strftime('%Y-%m-%d') }}</span>
-        </div>
+        {% endfor %}
+        {% else %}
+        <p>No posts available.</p>
+        {% endif %}
     </div>
-    {% endfor %}
 </div>
 {% endblock %}

@@ -17,40 +17,44 @@
     </script>
 </head>
 <body>
-    {% if current_user.is_authenticated %}
-    <div class="navbar">
-        <h1>Wanderly</h1>
-        <div class="nav-links">
-            <ul>
-                <li><a href="{{ url_for('feed') }}">Feed</a></li>
-                <li><a href="{{ url_for('account') }}">My Account</a></li>
-                <li><a href="{{ url_for('upload') }}">Upload a Post</a></li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">Settings</a>
+    <div class="v4368_321106">
+        <div class="v4368_321115">
+            <div class="v4368_321116">Wanderly</div>
+            {% if current_user.is_authenticated %}
+            <div class="nav-links">
+                <a class="v4368_321117" href="{{ url_for('feed') }}">Feed</a>
+                <a class="v4368_321118" href="{{ url_for('account') }}">My Account</a>
+                <a class="v4368_321119" href="{{ url_for('upload') }}">Upload</a>
+                <div class="dropdown">
+                    <a class="v4368_321120" href="javascript:void(0)">Settings</a>
                     <div class="dropdown-content">
                         <a href="{{ url_for('change_username') }}">Change Username</a>
                         <a href="{{ url_for('logout') }}">Logout</a>
                     </div>
-                </li>
-            </ul>
-        </div>
-        <form class="search-form" action="{{ url_for('search') }}" method="GET">
-            <input type="text" name="q" placeholder="Search users...">
-            <button type="submit">Search</button>
-        </form>
-    </div>
-    {% endif %}
-    <div class="main-content">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="container">
-                    {% for category, message in messages %}
-                        <div class="flash {{ category }}">{{ message }}</div>
-                    {% endfor %}
                 </div>
+                <form class="search-form" action="{{ url_for('search') }}" method="GET">
+                    <input class="search-input" type="text" name="q" placeholder="Search users...">
+                    <button class="search-button" type="submit">Search</button>
+                </form>
+            </div>
             {% endif %}
-        {% endwith %}
-        {% block content %}{% endblock %}
+        </div>
+        <div class="welcome-message">
+            <h2>Welcome to Wanderly</h2>
+            <p>Discover and share your travel experiences</p>
+        </div>
+        <div class="main-content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="container">
+                        {% for category, message in messages %}
+                            <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+        </div>
     </div>
 </body>
 </html>

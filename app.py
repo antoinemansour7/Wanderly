@@ -116,7 +116,7 @@ def allowed_file(filename):
 @app.route('/feed')
 @login_required
 def feed():
-    posts = Post.query.order_by(Post.date_posted.desc()).all()
+    posts = current_user.followed_posts().all()
     return render_template('feed.html', posts=posts)
 
 @app.route('/uploads/<filename>')
