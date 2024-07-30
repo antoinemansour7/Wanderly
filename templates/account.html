@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}My Account{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>My Account</h2>
+    <p>First Name: {{ user.first_name }}</p>
+    <p>Last Name: {{ user.last_name }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Username: {{ user.username }}</p>
+    <p>Followers: {{ user.followers.count() }}</p>
+    <p>Following: {{ user.followed.count() }}</p>
+    
+    <h3>Your Photos</h3>
+    <div class="post-grid">
+        {% for post in user.posts %}
+        <div class="post">
+            <div class="post-header">
+                <span>{{ user.username }}</span>
+            </div>
+            <img src="{{ url_for('uploaded_file', filename=post.image_file) }}" alt="Trip Image">
+            <div class="post-footer">
+                <form method="POST" action="{{ url_for('delete_post', post_id=post.id) }}">
+                    <button type="submit" class="delete-button">Delete</button>
+                </form>
+                <span>Posted on {{ post.date_posted.strftime('%Y-%m-%d') }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

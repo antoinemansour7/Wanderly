@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Change Username{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Change Username</h2>
+    <form method="POST">
+        <label for="new_username">New Username:</label>
+        <input type="text" name="new_username" required>
+        <button type="submit">Change Username</button>
+    </form>
+</div>
+{% endblock %}

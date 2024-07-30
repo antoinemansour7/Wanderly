@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.dropdown').hover(function() {
+                $(this).find('.dropdown-content').stop(true, true).slideDown('fast');
+            }, function() {
+                $(this).find('.dropdown-content').stop(true, true).slideUp('fast');
+            });
+        });
+    </script>
+</head>
+<body>
+    {% if current_user.is_authenticated %}
+    <div class="navbar">
+        <h1>Wanderly</h1>
+        <div class="nav-links">
+            <ul>
+                <li><a href="{{ url_for('feed') }}">Feed</a></li>
+                <li><a href="{{ url_for('account') }}">My Account</a></li>
+                <li><a href="{{ url_for('upload') }}">Upload a Post</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)">Settings</a>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('change_username') }}">Change Username</a>
+                        <a href="{{ url_for('logout') }}">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <form class="search-form" action="{{ url_for('search') }}" method="GET">
+            <input type="text" name="q" placeholder="Search users...">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    {% endif %}
+    <div class="main-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="container">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
